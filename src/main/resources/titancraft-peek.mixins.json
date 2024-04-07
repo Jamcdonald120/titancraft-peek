@@ -14,7 +14,7 @@
     "ShulkerBoxScreenMixin",
     "ItemStackMixin"
   ],
-  "mixins": ["ShulkerBoxBlockEntityMixin"],
+  "mixins": [],
   "injectors": {
     "defaultRequire": 1
   }
