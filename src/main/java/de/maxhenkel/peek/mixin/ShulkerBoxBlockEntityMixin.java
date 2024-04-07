@@ -34,55 +34,6 @@ public abstract class ShulkerBoxBlockEntityMixin extends RandomizableContainerBl
         super(blockEntityType, blockPos, blockState);
     }
 
-    @Nullable
-    @Override
-    public Packet<ClientGamePacketListener> getUpdatePacket() {
-        if (!Peek.CONFIG.sendShulkerBoxDataToClient.get()) {
-            return super.getUpdatePacket();
-        }
-        return ClientboundBlockEntityDataPacket.create(this);
-    }
-
-    @Override
-    public CompoundTag getUpdateTag() {
-        if (!Peek.CONFIG.sendShulkerBoxDataToClient.get()) {
-            return super.getUpdateTag();
-        }
-        CompoundTag tag = new CompoundTag();
-        saveAdditional(tag);
-        if (tag.isEmpty()) {
-            // If the tag is empty, save container items again with an empty items list,so that the update packet is actually processed
-            // Empty tags are replaced with null in the ClientboundBlockEntityDataPacket and thus not processed on the client
-            ContainerHelper.saveAllItems(tag, itemStacks, true);
-        }
-
-        return tag;
-    }
-
-    @Override
-    public void setChanged() {
-        super.setChanged();
-        if (!Peek.CONFIG.sendShulkerBoxDataToClient.get()) {
-            return;
-        }
-        if (level == null || level.isClientSide()) {
-            return;
-        }
-        Packet<ClientGamePacketListener> packet = getUpdatePacket();
-        if (!(packet instanceof ClientboundBlockEntityDataPacket dataPacket)) {
-            return;
-        }
-        CompoundTag tag = dataPacket.getTag();
-        if (tag == null) {
-            tag = new CompoundTag();
-        }
-        if (lastData != null && lastData.equals(tag)) {
-            return;
-        }
-
-        PlayerLookup.tracking(this).forEach(p -> p.connection.send(packet));
-        lastData = tag;
-    }
 
     @Shadow
     protected abstract void saveAdditional(CompoundTag compoundTag);

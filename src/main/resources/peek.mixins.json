@@ -7,11 +7,6 @@
     "BlockItemMixin",
     "ClientTooltipComponentMixin",
     "ShulkerBoxBlockMixin",
-    "BeehiveBlockMixin",
-    "MapItemMixin",
-    "CompassItemMixin",
-    "ItemMixin",
-    "SuspiciousStewItemMixin",
     "BlockEntityWithoutLevelRendererMixin",
     "ItemRendererMixin",
     "ShulkerBoxRendererMixin",
@@ -30,9 +25,7 @@
     "DecoratedPotBlockEntityMixin",
     "DecoratedPotBlockMixin"
   ],
-  "mixins": [
-    "ShulkerBoxBlockEntityMixin"
-  ],
+  "mixins": ["ShulkerBoxBlockEntityMixin"],
   "injectors": {
     "defaultRequire": 1
   }

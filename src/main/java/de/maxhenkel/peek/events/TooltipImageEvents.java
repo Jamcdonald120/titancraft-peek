@@ -22,14 +22,6 @@ public class TooltipImageEvents {
     public static Optional<TooltipComponent> getTooltipImage(ItemStack stack, Block block) {
         if (block instanceof ShulkerBoxBlock) {
             return getShulkerBoxTooltipImage(stack);
-        } else if (block instanceof ChestBlock) {
-            return getChestTooltipImage(stack);
-        } else if (block instanceof BarrelBlock) {
-            return getBarrelTooltipImage(stack);
-        } else if (block instanceof DispenserBlock) {
-            return getDispenserTooltipImage(stack);
-        } else if (block instanceof HopperBlock) {
-            return getHopperTooltipImage(stack);
         } else if (block instanceof EnderChestBlock) {
             return getEnderChestTooltipImage();
         }
@@ -74,83 +66,5 @@ public class TooltipImageEvents {
         return Optional.of(new ContainerTooltip(9, 3, items));
     }
 
-    private static Optional<TooltipComponent> getChestTooltipImage(ItemStack stack) {
-        if (!Peek.CONFIG.peekChests.get()) {
-            return Optional.empty();
-        }
-        return getDefaultChestSizeTooltipImage(stack);
-    }
-
-    private static Optional<TooltipComponent> getBarrelTooltipImage(ItemStack stack) {
-        if (!Peek.CONFIG.peekBarrels.get()) {
-            return Optional.empty();
-        }
-        return getDefaultChestSizeTooltipImage(stack);
-    }
-
-    private static Optional<TooltipComponent> getDispenserTooltipImage(ItemStack stack) {
-        if (!Peek.CONFIG.peekDispensers.get()) {
-            return Optional.empty();
-        }
-
-        CompoundTag blockEntityData = BlockItem.getBlockEntityData(stack);
-        if (blockEntityData == null) {
-            return Optional.empty();
-        }
-        if (!blockEntityData.contains(ITEMS, Tag.TAG_LIST)) {
-            return Optional.empty();
-        }
-
-        NonNullList<ItemStack> items = NonNullList.withSize(9, ItemStack.EMPTY);
-        ContainerHelper.loadAllItems(blockEntityData, items);
-
-        if (!Peek.CONFIG.showEmptyContainers.get() && items.stream().allMatch(ItemStack::isEmpty)) {
-            return Optional.empty();
-        }
-
-        return Optional.of(new ContainerTooltip(3, 3, items));
-    }
-
-    private static Optional<TooltipComponent> getHopperTooltipImage(ItemStack stack) {
-        if (!Peek.CONFIG.peekHoppers.get()) {
-            return Optional.empty();
-        }
-
-        CompoundTag blockEntityData = BlockItem.getBlockEntityData(stack);
-        if (blockEntityData == null) {
-            return Optional.empty();
-        }
-        if (!blockEntityData.contains(ITEMS, Tag.TAG_LIST)) {
-            return Optional.empty();
-        }
-
-        NonNullList<ItemStack> items = NonNullList.withSize(5, ItemStack.EMPTY);
-        ContainerHelper.loadAllItems(blockEntityData, items);
-
-        if (!Peek.CONFIG.showEmptyContainers.get() && items.stream().allMatch(ItemStack::isEmpty)) {
-            return Optional.empty();
-        }
-
-        return Optional.of(new ContainerTooltip(5, 1, items));
-    }
-
-    private static Optional<TooltipComponent> getDefaultChestSizeTooltipImage(ItemStack stack) {
-        CompoundTag blockEntityData = BlockItem.getBlockEntityData(stack);
-        if (blockEntityData == null) {
-            return Optional.empty();
-        }
-        if (!blockEntityData.contains(ITEMS, Tag.TAG_LIST)) {
-            return Optional.empty();
-        }
-
-        NonNullList<ItemStack> items = NonNullList.withSize(27, ItemStack.EMPTY);
-        ContainerHelper.loadAllItems(blockEntityData, items);
-
-        if (!Peek.CONFIG.showEmptyContainers.get() && items.stream().allMatch(ItemStack::isEmpty)) {
-            return Optional.empty();
-        }
-
-        return Optional.of(new ContainerTooltip(9, 3, items));
-    }
 
 }
