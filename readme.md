@@ -47,13 +47,8 @@ This feature has intentionaly been PURGED from Peek to comply with mod aproval r
 
 Update images 
 
-![](https://user-images.githubusercontent.com/13237524/197722463-66759d59-e15c-4741-b027-d165e8de285d.png)
+![image](https://github.com/Jamcdonald120/titancraft-peek/assets/22623066/dad77ebf-34fc-48b6-9ef4-5f4fb8a77d3d)
 
-![](https://user-images.githubusercontent.com/13237524/197735134-faa9b839-27eb-49cc-bf8a-d2f61e0f28f2.png)
-
-![](https://user-images.githubusercontent.com/13237524/197722466-6d4b0bdf-9fcb-4b78-867a-de462fe37d97.png)
-
-![](https://user-images.githubusercontent.com/13237524/197736803-e6496662-b14e-4ff4-9bb9-ea003ab62266.png)
 
 **Fully configurable with [ModMenu](https://www.curseforge.com/minecraft/mc-mods/modmenu) and [ClothConfig](https://www.curseforge.com/minecraft/mc-mods/cloth-config)**
 
