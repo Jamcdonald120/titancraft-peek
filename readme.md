@@ -11,7 +11,7 @@ Now exclusivly client-side only.
 
 ## Features
 
-**Shulker box hints** ([More information](https://modrepo.de/minecraft/peek/wiki/shulker_box_hints))
+**Shulker box hints** ([More information](https://modrepo.de/minecraft/peek/wiki/`))
 
 ![](https://github.com/henkelmax/peek/assets/13237524/1a44f3c4-92c6-47f8-b711-e0de69a0276c)
 
@@ -43,12 +43,9 @@ This feature has intentionaly been PURGED from Peek to comply with mod aproval r
 
 This feature has intentionaly been PURGED from Peek to comply with mod aproval requirements
 
-**Peek Inventory Shulkers**
+**Pick-blocked containers**
 
-Update images 
-
-![image](https://github.com/Jamcdonald120/titancraft-peek/assets/22623066/dad77ebf-34fc-48b6-9ef4-5f4fb8a77d3d)
-
+This feature has intentionaly been PURGED from Peek to comply with mod aproval requirements
 
 **Fully configurable with [ModMenu](https://www.curseforge.com/minecraft/mc-mods/modmenu) and [ClothConfig](https://www.curseforge.com/minecraft/mc-mods/cloth-config)**
 
