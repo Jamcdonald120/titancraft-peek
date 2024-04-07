@@ -1,7 +1,8 @@
 # Titancraft-Peek
 
 A stripped down version of the Peek mod expresly for use with [Titancraft](https://www.patreon.com/tangotek/)
-Can be used client-side only.
+
+Now exclusivly client-side only.
 
 ## Optional Dependencies
 
