@@ -57,5 +57,5 @@ Update images
 
 **Fully configurable with [ModMenu](https://www.curseforge.com/minecraft/mc-mods/modmenu) and [ClothConfig](https://www.curseforge.com/minecraft/mc-mods/cloth-config)**
 
-Update Image
-![](https://github.com/henkelmax/peek/assets/13237524/8ad6e8d8-c871-421b-a6ce-c25efa9049cd)
+Lets be honest, there isnt much to configure anymore
+
