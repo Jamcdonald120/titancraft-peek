@@ -25,7 +25,7 @@
     "DecoratedPotBlockEntityMixin",
     "DecoratedPotBlockMixin"
   ],
-  "mixins": ["ShulkerBoxBlockEntityMixin"],
+  "mixins": [],
   "injectors": {
     "defaultRequire": 1
   }
