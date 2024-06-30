@@ -40,5 +40,17 @@ public class TooltipImageEvents {
         }
         return sizedContainerTooltipImage(stack, 9, 3);
     }
+	private static Optional<TooltipComponent> sizedContainerTooltipImage(ItemStack stack, int width, int height) {
+        ItemContainerContents contents = stack.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY);
+
+        if (!Peek.CONFIG.showEmptyContainers.get() && contents.stream().allMatch(ItemStack::isEmpty)) {
+            return Optional.empty();
+        }
+
+        NonNullList<ItemStack> items = NonNullList.withSize(width * height, ItemStack.EMPTY);
+        contents.copyInto(items);
+
+        return Optional.of(new ContainerTooltip(width, height, items));
+    }
 
 }
