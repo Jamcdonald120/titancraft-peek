@@ -33,22 +33,5 @@ public class DecoratedPotBlockEntityMixin extends BlockEntity implements PeekDec
         return item;
     }
 
-    @Nullable
-    @Override
-    public Packet<ClientGamePacketListener> getUpdatePacket() {
-        if (!Peek.CONFIG.sendDecoratedPotDataToClient.get()) {
-            return super.getUpdatePacket();
-        }
-        return ClientboundBlockEntityDataPacket.create(this);
-    }
 
-    @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
-        if (!Peek.CONFIG.sendDecoratedPotDataToClient.get()) {
-            return super.getUpdateTag(provider);
-        }
-        CompoundTag tag = new CompoundTag();
-        saveAdditional(tag, provider);
-        return tag;
-    }
 }
