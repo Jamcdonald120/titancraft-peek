@@ -32,6 +32,7 @@ public class ClothConfigIntegration {
                 Peek.CONFIG.peekShulkerBoxes
         ));
 
+
         peeking.addEntry(fromConfigEntry(entryBuilder,
                 Component.translatable("cloth_config.peek.peek_ender_chests"),
                 Component.translatable("cloth_config.peek.peek_ender_chests.description"),
