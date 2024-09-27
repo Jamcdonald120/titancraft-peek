@@ -1,18 +1,17 @@
 {
   "schemaVersion": 1,
-  "id": "titancraft-peek",
+  "id": "peek",
   "version": "${mod_version}",
-  "name": "Titancraft-Peek",
-  "description": "Additional shulker features.",
+  "name": "Peek",
+  "description": "Additional information in item tooltips.",
   "authors": [
-    "Max Henkel",
-    "Jamcdonald120"
+    "Max Henkel"
   ],
   "contact": {
-    "homepage": "https://github.com/Jamcdonald120/titancraft-peek/",
-    "issues": "https://github.com/Jamcdonald120/titancraft-peek/issues",
-    "sources": "https://github.com/Jamcdonald120/",
-    "email": "jamcdonald@discord.app"
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/peek",
+    "issues": "https://github.com/henkelmax/peek/issues",
+    "sources": "https://github.com/henkelmax/peek",
+    "email": "info@modrepo.de"
   },
   "license": "All Rights Reserved",
   "icon": "icon.png",
@@ -29,7 +28,7 @@
     ]
   },
   "mixins": [
-    "titancraft-peek.mixins.json"
+    "peek.mixins.json"
   ],
   "depends": {
     "fabricloader": "${fabric_loader_dependency}",
@@ -46,8 +45,7 @@
     "fabric-api": "${fabric_api_dependency_breaks}"
   },
   "conflicts": {
-    "enhancedblockentities": "*",
-    "peek": "*"
+    "enhancedblockentities": "*"
   },
-  "accessWidener": "titancraft-peek.accesswidener"
+  "accessWidener": "peek.accesswidener"
 }
