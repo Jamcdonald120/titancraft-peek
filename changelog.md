@@ -1,1 +1,1 @@
-- Purged excessive features
+- Fixed Shulker Box names not being respected on servers without the mod
