@@ -41,7 +41,6 @@ public class TooltipImageEvents {
         return sizedContainerTooltipImage(stack, 9, 3);
     }
 
-
     private static Optional<TooltipComponent> sizedContainerTooltipImage(ItemStack stack, int width, int height) {
         ItemContainerContents contents = stack.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY);
 

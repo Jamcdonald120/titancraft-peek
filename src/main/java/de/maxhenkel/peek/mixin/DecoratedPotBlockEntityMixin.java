@@ -33,5 +33,4 @@ public class DecoratedPotBlockEntityMixin extends BlockEntity implements PeekDec
         return item;
     }
 
-
 }

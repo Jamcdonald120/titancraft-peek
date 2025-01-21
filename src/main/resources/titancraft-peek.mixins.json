@@ -12,18 +12,7 @@
     "ShulkerBoxRendererMixin",
     "ShulkerBoxMenuMixin",
     "ShulkerBoxScreenMixin",
-    "ItemStackMixin",
-    "AnvilScreenMixin",
-    "MinecraftMixin",
-    "PackRepositoryMixin",
-    "ClientPlayNetworkHandlerMixin",
-    "MultiPlayerGameModeMixin",
-    "LocalPlayerMixin",
-    "ItemPropertiesMixin",
-    "GuiMixin",
-    "DecoratedPotRendererMixin",
-    "DecoratedPotBlockEntityMixin",
-    "DecoratedPotBlockMixin"
+    "ItemStackMixin"
   ],
   "mixins": [],
   "injectors": {

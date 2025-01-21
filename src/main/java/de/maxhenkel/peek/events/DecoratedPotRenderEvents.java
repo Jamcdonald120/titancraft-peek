@@ -20,9 +20,9 @@ import net.minecraft.world.level.block.entity.DecoratedPotBlockEntity;
 
 public class DecoratedPotRenderEvents {
 
-    public static final ResourceLocation DECORATED_POT_ITEM_PREDICATE = ResourceLocation.fromNamespaceAndPath(Peek.MODID, "decorated_pot_item");
 
-    private static final Minecraft mc = Minecraft.getInstance();
+    public static final ResourceLocation DECORATED_POT_ITEM_CONDITION = ResourceLocation.fromNamespaceAndPath(Peek.MODID, "decorated_pot_item");
+
     private static final String DECORATED_POT_ITEM_TAG = "DecoratedPotItem";
 
     public static void renderDecoratedPotLabel(DecoratedPotBlockEntity pot, float partialTicks, PoseStack poseStack, MultiBufferSource multiBufferSource, int light, int overlay) {
@@ -33,6 +33,7 @@ public class DecoratedPotRenderEvents {
         if (containedItem == null || containedItem.isEmpty()) {
             return;
         }
+        Minecraft mc = Minecraft.getInstance();
         ItemStack renderItemStack = createPotRenderStack(containedItem);
         poseStack.pushPose();
 
