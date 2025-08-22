@@ -9,7 +9,6 @@
 
     "BlockItemMixin",
     "ClientPlayNetworkHandlerMixin",
-    "ClientTooltipComponentMixin",
     "ConditionalItemModelPropertiesMixin",
     "DecoratedPotBlockEntityMixin",
     "DecoratedPotBlockMixin",
