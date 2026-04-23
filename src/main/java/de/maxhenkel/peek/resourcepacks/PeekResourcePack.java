@@ -4,8 +4,9 @@ import com.google.common.collect.ImmutableSet;
 import de.maxhenkel.peek.Peek;
 import net.minecraft.SharedConstants;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.*;
+import net.minecraft.server.packs.metadata.pack.PackFormat;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.server.packs.resources.IoSupplier;
@@ -27,8 +28,8 @@ public class PeekResourcePack extends AbstractPackResources implements Pack.Reso
     }
 
     public Pack toPack() {
-        int packVersion = SharedConstants.getCurrentVersion().packVersion(PackType.CLIENT_RESOURCES);
-        Pack.Metadata meta = Pack.readPackMetadata(location(), this, packVersion);
+        PackFormat packFormat = SharedConstants.getCurrentVersion().packVersion(PackType.CLIENT_RESOURCES);
+        Pack.Metadata meta = Pack.readPackMetadata(location(), this, packFormat, PackType.CLIENT_RESOURCES);
         if (meta == null) {
             throw new IllegalStateException("Could not find builtin resource pack info");
         }
@@ -52,7 +53,7 @@ public class PeekResourcePack extends AbstractPackResources implements Pack.Reso
 
     @Nullable
     @Override
-    public IoSupplier<InputStream> getResource(PackType packType, ResourceLocation resourceLocation) {
+    public IoSupplier<InputStream> getResource(PackType packType, Identifier resourceLocation) {
         return getRootResource(packType.getDirectory(), resourceLocation.getNamespace(), resourceLocation.getPath());
     }
 
@@ -81,7 +82,7 @@ public class PeekResourcePack extends AbstractPackResources implements Pack.Reso
 
             try (Stream<Path> files = Files.walk(resPath)) {
                 files.filter(path -> !Files.isDirectory(path)).forEach(path -> {
-                    ResourceLocation resourceLocation = ResourceLocation.fromNamespaceAndPath(namespace, convertPath(path).substring(convertPath(namespacePath).length() + 1));
+                    Identifier resourceLocation = Identifier.fromNamespaceAndPath(namespace, convertPath(path).substring(convertPath(namespacePath).length() + 1));
                     resourceOutput.accept(resourceLocation, getResource(type, resourceLocation));
                 });
             }
@@ -103,7 +104,7 @@ public class PeekResourcePack extends AbstractPackResources implements Pack.Reso
 
     @Override
     public Set<String> getNamespaces(PackType packType) {
-        return ImmutableSet.of(ResourceLocation.DEFAULT_NAMESPACE);
+        return ImmutableSet.of(Identifier.DEFAULT_NAMESPACE);
     }
 
     @Override

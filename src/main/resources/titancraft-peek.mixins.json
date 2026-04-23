@@ -14,18 +14,16 @@
     "DecoratedPotBlockEntityMixin",
     "DecoratedPotBlockMixin",
     "DecoratedPotRendererMixin",
-
 	"GuiMixin",
-
     "ItemStackMixin",
     "LocalPlayerMixin",
-
     "MinecraftMixin",
     "MultiPlayerGameModeMixin",
     "PackRepositoryMixin",
     "ShulkerBoxBlockMixin",
     "ShulkerBoxMenuMixin",
     "ShulkerBoxRendererMixin",
+    "ShulkerBoxRenderStateMixin",
     "ShulkerBoxScreenMixin",
     "ShulkerBoxSpecialRendererMixin"
 
