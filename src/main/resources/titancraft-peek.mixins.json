@@ -4,7 +4,9 @@
   "package": "de.maxhenkel.peek.mixin",
   "compatibilityLevel": "JAVA_17",
   "client": [
-    "AnvilScreenMixin",
+
+	"AnvilScreenMixin",
+
     "BlockItemMixin",
     "ClientPlayNetworkHandlerMixin",
     "ClientTooltipComponentMixin",
@@ -13,11 +15,11 @@
     "DecoratedPotBlockMixin",
     "DecoratedPotRendererMixin",
     "DecoratedPotRenderStateMixin",
-    "GuiMixin",
     "ItemStackMixin",
     "LocalPlayerMixin",
-    "LodestoneTrackerMixin",
-    "MapDecorationsMixin",
+	"GuiMixin",
+    "ItemStackMixin",
+    "LocalPlayerMixin",
     "MinecraftMixin",
     "MultiPlayerGameModeMixin",
     "PackRepositoryMixin",
@@ -31,7 +33,10 @@
   ],
   "mixins": [
     "ShulkerBoxBlockEntityMixin"
+    "ShulkerBoxSpecialRendererMixin"
+
   ],
+  "mixins": [],
   "injectors": {
     "defaultRequire": 1
   }
