@@ -1,9 +1,7 @@
 package de.maxhenkel.peek.mixin;
 
 import com.mojang.serialization.MapCodec;
-import de.maxhenkel.peek.events.DecoratedPotRenderEvents;
 import de.maxhenkel.peek.events.ShulkerRenderEvents;
-import de.maxhenkel.peek.itemproperties.DecoratedPotItemConditionalItemModelProperty;
 import de.maxhenkel.peek.itemproperties.ShulkerItemConditionalItemModelProperty;
 import net.minecraft.client.renderer.item.properties.conditional.ConditionalItemModelProperties;
 import net.minecraft.client.renderer.item.properties.conditional.ConditionalItemModelProperty;
@@ -26,7 +24,6 @@ public class ConditionalItemModelPropertiesMixin {
     @Inject(method = "bootstrap", at = @At("RETURN"))
     private static void init(CallbackInfo ci) {
         ID_MAPPER.put(ShulkerRenderEvents.SHULKER_ITEM_CONDITION, ShulkerItemConditionalItemModelProperty.MAP_CODEC);
-        ID_MAPPER.put(DecoratedPotRenderEvents.DECORATED_POT_ITEM_CONDITION, DecoratedPotItemConditionalItemModelProperty.MAP_CODEC);
     }
 
 }
