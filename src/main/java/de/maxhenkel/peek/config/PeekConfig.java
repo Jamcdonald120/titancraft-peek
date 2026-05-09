@@ -22,8 +22,6 @@ public class PeekConfig {
     public final ConfigEntry<ShulkerItemDisplayType> shulkerBoxItemDisplayType;
     public final ConfigEntry<Boolean> hideShulkerBoxDataStrings;
 
-    public final ConfigEntry<Boolean> showDecoratedPotHint;
-
     public final ConfigEntry<Boolean> showHud;
     public final ConfigEntry<String> hudBackgroundColor;
     public final ConfigEntry<String> hudTextColor;
@@ -93,13 +91,7 @@ public class PeekConfig {
                 true,
                 "If this is enabled, the mod will hide the data strings on tooltips and GUIs"
         );
-        showDecoratedPotHint = builder.booleanEntry(
-                "show_decorated_pot_hint",
-                false,
-                "If this is enabled, decorated pots will show the contained item and amount",
-                "If you are playing on a player, you need to have the mod installed on the server with the config option 'send_decorated_pot_data_to_client' enabled",
-                "If you are on singleplayer, the config option 'send_decorated_pot_data_to_client' must be enabled"
-        );
+        
         
         showHud = builder.booleanEntry(
                 "show_hud",
