@@ -12,7 +12,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.state.ShulkerBoxRenderState;
 import net.minecraft.client.renderer.item.ItemStackRenderState;
-import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponentPatch;
@@ -37,16 +37,20 @@ public class ShulkerRenderEvents {
 
     public static void submitShulkerBoxItemLabel(ShulkerHintData shulkerHintData, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int light) {
         ItemStackRenderState itemStackRenderState = ItemRenderUtils.fromStack(Minecraft.getInstance().level, null, createShulkerRenderStack(shulkerHintData.getDisplayItem()));
+        poseStack.pushPose();
+        poseStack.translate(-0.5F, 1.5F, 0.5F);
+        poseStack.rotateAround(Axis.XP.rotationDegrees(180F), 1F, 0F, 0F);
         submitShulkerBoxLabel(Direction.UP, 0F, itemStackRenderState, shulkerHintData.getLabelFormatted(), light, poseStack, submitNodeCollector);
+        poseStack.popPose();
     }
 
     private static void submitShulkerBoxLabel(Direction direction, float progress, @Nullable ItemStackRenderState displayItem, @Nullable FormattedCharSequence label, int lightCoords, PoseStack poseStack, SubmitNodeCollector submitNodeCollector) {
         Minecraft mc = Minecraft.getInstance();
 
         poseStack.pushPose();
-        poseStack.translate(0.5D, 0.5D, 0.5D);
-        poseStack.mulPose(direction.getRotation());
-        poseStack.translate(0D, 0.5D, 0D);
+        poseStack.translate(0.5F, 0.5F, 0.5F);
+        poseStack.rotate(direction.getRotation());
+        poseStack.translate(0F, 0.5F, 0F);
         poseStack.translate(0F, progress * 0.5F, 0F);
         poseStack.rotateAround(Axis.YP.rotationDegrees(-270F * progress), 0F, 1F, 0F);
 
@@ -73,6 +77,7 @@ public class ShulkerRenderEvents {
             poseStack.scale(textScale, textScale, textScale);
             poseStack.translate(0F, mc.font.lineHeight / 2F, 0F);
             poseStack.rotateAround(Axis.XP.rotationDegrees(180F), 1F, 0F, 0F);
+            poseStack.translate(0F, 0F, -0.05F);
             submitNodeCollector.submitText(poseStack, -width / 2F, 0F, label, false, Font.DisplayMode.POLYGON_OFFSET, lightCoords, 0xFFFFFFFF, 0x00000000, 0xFF000000);
             poseStack.popPose();
         }

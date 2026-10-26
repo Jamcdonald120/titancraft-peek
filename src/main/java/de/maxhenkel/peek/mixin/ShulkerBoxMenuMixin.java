@@ -14,8 +14,8 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 @Mixin(ShulkerBoxMenu.class)
 public class ShulkerBoxMenuMixin {
 
-    @ModifyVariable(method = "<init>(ILnet/minecraft/world/entity/player/Inventory;Lnet/minecraft/world/Container;)V", at = @At("HEAD"), ordinal = 0, argsOnly = true)
-    private static Container container(Container container, @Local(argsOnly = true) int containerId) {
+    @ModifyVariable(method = "<init>(ILnet/minecraft/world/entity/player/Inventory;Lnet/minecraft/world/Container;)V", at = @At("HEAD"), argsOnly = true, name = "container")
+    private static Container container(Container container, @Local(argsOnly = true, name = "containerId") int containerId) {
         if (!Peek.CONFIG.showShulkerBoxBlockHint.get()) {
             return container;
         }
