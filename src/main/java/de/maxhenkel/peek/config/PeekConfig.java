@@ -104,7 +104,17 @@ public class PeekConfig {
                 true,
                 "If this is enabled, the mod will hide the data strings on tooltips and GUIs"
         );
-
+		bundleColumns = builder.integerEntry(
+				"bundle_columns",
+				4, 4, 64,
+				"The amount of horizontal items that should be displayed when hovering over a bundle"
+		);
+		bundleItemCount = builder.integerEntry(
+				"bundle_item_count",
+				12, 4, 64,
+				"The amount of items that should be displayed when hovering over a bundle",
+				"Must be larger or equal to the bundle columns"
+		);
         showHud = builder.booleanEntry(
                 "show_hud",
                 false,

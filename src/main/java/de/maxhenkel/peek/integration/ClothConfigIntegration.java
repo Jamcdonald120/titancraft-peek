@@ -38,7 +38,7 @@ public class ClothConfigIntegration {
                 Peek.CONFIG.peekShulkerBoxes
         ));
 
-
+        
 
         peeking.addEntry(fromConfigEntry(entryBuilder,
                 Component.translatable("cloth_config.peek.peek_ender_chests"),
@@ -83,6 +83,7 @@ public class ClothConfigIntegration {
                 Peek.CONFIG.showShulkerBoxLabels
         ));
 
+        
 
 
         AtomicInteger bundleColumns = new AtomicInteger(Peek.CONFIG.bundleColumns.get());
