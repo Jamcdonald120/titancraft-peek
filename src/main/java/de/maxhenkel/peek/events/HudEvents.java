@@ -1,15 +1,19 @@
 package de.maxhenkel.peek.events;
 
 import de.maxhenkel.peek.Peek;
+import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
+import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.LightCoordsUtil;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
@@ -32,8 +36,13 @@ public class HudEvents {
 
     private static final Minecraft MC = Minecraft.getInstance();
     private static final int PADDING = 4;
+    private static final Identifier PEEK_HUD_LAYER = Identifier.fromNamespaceAndPath(Peek.MODID, "hud");
 
-    public static void onRenderHud(GuiGraphics graphics, int screenWidth, int screenHeight) {
+    public static void init() {
+        HudElementRegistry.attachElementBefore(VanillaHudElements.MOB_EFFECTS, PEEK_HUD_LAYER, HudEvents::onRenderHud);
+    }
+
+    private static void onRenderHud(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker) {
         if (!Peek.CONFIG.showHud.get()) {
             return;
         }
@@ -41,14 +50,16 @@ public class HudEvents {
         if (player == null) {
             return;
         }
+        int guiScaledWidth = MC.getWindow().getGuiScaledWidth();
+        int guiScaledHeight = MC.getWindow().getGuiScaledHeight();
         if (MC.hitResult instanceof BlockHitResult blockHitResult) {
-            renderBlockHud(player, graphics, screenWidth, screenHeight, blockHitResult);
+            renderBlockHud(player, graphics, guiScaledWidth, guiScaledHeight, blockHitResult);
         } else if (MC.hitResult instanceof EntityHitResult entityHitResult) {
-            renderEntityHud(player, graphics, screenWidth, screenHeight, entityHitResult);
+            renderEntityHud(player, graphics, guiScaledWidth, guiScaledHeight, entityHitResult);
         }
     }
 
-    private static void renderBlockHud(LocalPlayer player, GuiGraphics graphics, int screenWidth, int screenHeight, BlockHitResult blockHitResult) {
+    private static void renderBlockHud(LocalPlayer player, GuiGraphicsExtractor graphics, int screenWidth, int screenHeight, BlockHitResult blockHitResult) {
         Level level = player.level();
         BlockState blockState = level.getBlockState(blockHitResult.getBlockPos());
 
@@ -69,11 +80,11 @@ public class HudEvents {
         int hudLeft = screenWidth / 2 - hudWidth / 2;
 
         graphics.fill(hudLeft, 0, hudLeft + hudWidth, hudHeight, Peek.CONFIG.hudBackgroundColorValue);
-        graphics.renderItem(item, hudLeft + PADDING, PADDING);
-        graphics.drawString(font, name, hudLeft + itemSize + PADDING * 2, hudHeight / 2 - font.lineHeight / 2, Peek.CONFIG.hudTextColorValue);
+        graphics.item(item, hudLeft + PADDING, PADDING);
+        graphics.text(font, name, hudLeft + itemSize + PADDING * 2, hudHeight / 2 - font.lineHeight / 2, Peek.CONFIG.hudTextColorValue);
     }
 
-    private static void renderEntityHud(LocalPlayer player, GuiGraphics graphics, int screenWidth, int screenHeight, EntityHitResult entityHitResult) {
+    private static void renderEntityHud(LocalPlayer player, GuiGraphicsExtractor graphics, int screenWidth, int screenHeight, EntityHitResult entityHitResult) {
         Entity entity = entityHitResult.getEntity();
 
         if (!(entity instanceof LivingEntity livingEntity)) {
@@ -97,12 +108,12 @@ public class HudEvents {
         int x2 = x1 + maxEntityWidth;
         int y2 = y1 + maxEntityHeight;
         renderEntity(graphics, x1, y1, x2, y2, maxEntityWidth, maxEntityHeight, getCachedEntity(livingEntity.getType()));
-        graphics.drawString(font, name, hudLeft + maxEntityWidth + PADDING * 2, hudHeight / 2 - font.lineHeight / 2, Peek.CONFIG.hudTextColorValue);
+        graphics.text(font, name, hudLeft + maxEntityWidth + PADDING * 2, hudHeight / 2 - font.lineHeight / 2, Peek.CONFIG.hudTextColorValue);
     }
 
     private static final Quaternionf ENTITY_ANGLE = new Quaternionf().rotationXYZ(0F, Mth.DEG_TO_RAD * 180F, Mth.DEG_TO_RAD * 180F);
 
-    private static void renderEntity(GuiGraphics graphics, int x1, int y1, int x2, int y2, float maxWidth, float maxHeight, LivingEntity entity) {
+    private static void renderEntity(GuiGraphicsExtractor graphics, int x1, int y1, int x2, int y2, float maxWidth, float maxHeight, LivingEntity entity) {
         if (entity == null) {
             return;
         }
@@ -121,14 +132,14 @@ public class HudEvents {
         renderEntityInInventory(graphics, x1, y1, x2, y2, entityScale, offset, rot, null, entity);
     }
 
-    private static void renderEntityInInventory(GuiGraphics guiGraphics, int x1, int y1, int x2, int y2, float scale, Vector3f translation, Quaternionf rotation, @Nullable Quaternionf overrideCameraAngle, LivingEntity entity) {
+    private static void renderEntityInInventory(GuiGraphicsExtractor guiGraphics, int x1, int y1, int x2, int y2, float scale, Vector3f translation, Quaternionf rotation, @Nullable Quaternionf overrideCameraAngle, LivingEntity entity) {
         EntityRenderDispatcher dispatcher = MC.getEntityRenderDispatcher();
         EntityRenderer<? super LivingEntity, ?> entityRenderer = dispatcher.getRenderer(entity);
         EntityRenderState state = entityRenderer.createRenderState(entity, 1F);
-        state.lightCoords = LightTexture.FULL_BRIGHT;
+        state.lightCoords = LightCoordsUtil.FULL_BRIGHT;
         state.shadowPieces.clear();
         state.outlineColor = 0;
-        guiGraphics.submitEntityRenderState(state, scale, translation, rotation, overrideCameraAngle, x1, y1, x2, y2);
+        guiGraphics.entity(state, scale, translation, rotation, overrideCameraAngle, x1, y1, x2, y2);
     }
 
     private static final Map<EntityType<?>, LivingEntity> ENTITY_CACHE = new HashMap<>();

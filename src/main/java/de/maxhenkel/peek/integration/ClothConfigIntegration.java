@@ -7,11 +7,13 @@ import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
+import me.shedaniel.clothconfig2.gui.entries.IntegerListEntry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ClothConfigIntegration {
     public static Screen createConfigScreen(Screen parent) {
@@ -36,12 +38,17 @@ public class ClothConfigIntegration {
                 Peek.CONFIG.peekShulkerBoxes
         ));
 
-
+        
 
         peeking.addEntry(fromConfigEntry(entryBuilder,
                 Component.translatable("cloth_config.peek.peek_ender_chests"),
                 Component.translatable("cloth_config.peek.peek_ender_chests.description"),
                 Peek.CONFIG.peekEnderChests
+        ));
+        peeking.addEntry(fromConfigEntry(entryBuilder,
+                Component.translatable("cloth_config.peek.peek_sulfur_cube_archetype"),
+                Component.translatable("cloth_config.peek.peek_sulfur_cube_archetype.description"),
+                Peek.CONFIG.peekSulfurCubeArchetype
         ));
 
         ConfigCategory shulkerBoxHints = builder.getOrCreateCategory(Component.translatable("cloth_config.peek.category.shulker_box_hints"));
@@ -76,6 +83,43 @@ public class ClothConfigIntegration {
                 Peek.CONFIG.showShulkerBoxLabels
         ));
 
+        
+
+
+        AtomicInteger bundleColumns = new AtomicInteger(Peek.CONFIG.bundleColumns.get());
+        IntegerListEntry bundleItemAmountEntry = entryBuilder
+                .startIntField(Component.translatable("cloth_config.peek.bundle_item_amount"), Peek.CONFIG.bundleItemCount.get())
+                .setTooltip(Component.translatable("cloth_config.peek.bundle_item_amount.description"))
+                .setMin(Peek.CONFIG.bundleItemCount.getMin())
+                .setMax(Peek.CONFIG.bundleItemCount.getMax())
+                .setDefaultValue(Peek.CONFIG.bundleItemCount::getDefault)
+                .setSaveConsumer(d -> Peek.CONFIG.bundleItemCount.set(d).save())
+                .setErrorSupplier(i -> {
+                    if (bundleColumns.get() > i) {
+                        return Optional.of(Component.translatable("cloth_config.peek.bundle_item_amount.columns_error"));
+                    }
+                    return Optional.empty();
+                })
+                .build();
+
+        IntegerListEntry bundleColumnsEntry = entryBuilder
+                .startIntField(Component.translatable("cloth_config.peek.bundle_columns"), Peek.CONFIG.bundleColumns.get())
+                .setTooltip(Component.translatable("cloth_config.peek.bundle_columns.description"))
+                .setMin(Peek.CONFIG.bundleColumns.getMin())
+                .setMax(Peek.CONFIG.bundleColumns.getMax())
+                .setDefaultValue(Peek.CONFIG.bundleColumns::getDefault)
+                .setSaveConsumer(d -> Peek.CONFIG.bundleColumns.set(d).save())
+                .setErrorSupplier(i -> {
+                    bundleColumns.set(i);
+                    return Optional.empty();
+                })
+                .build();
+
+        if (PeekConfig.shouldModifyBundles()) {
+            ConfigCategory bundles = builder.getOrCreateCategory(Component.translatable("cloth_config.peek.category.bundles"));
+            bundles.addEntry(bundleItemAmountEntry);
+            bundles.addEntry(bundleColumnsEntry);
+        }
 
         return builder.build();
     }

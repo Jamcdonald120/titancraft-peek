@@ -2,6 +2,9 @@ package de.maxhenkel.peek.config;
 
 import de.maxhenkel.configbuilder.ConfigBuilder;
 import de.maxhenkel.configbuilder.entry.ConfigEntry;
+import de.maxhenkel.configbuilder.entry.IntegerConfigEntry;
+import de.maxhenkel.peek.Peek;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.network.chat.Component;
 
 import java.math.BigInteger;
@@ -13,6 +16,7 @@ public class PeekConfig {
     public final ConfigEntry<Boolean> peekShulkerBoxes;
 
     public final ConfigEntry<Boolean> peekEnderChests;
+    public final ConfigEntry<Boolean> peekSulfurCubeArchetype;
 
     public final ConfigEntry<Boolean> showShulkerBoxItemHint;
     public final ConfigEntry<Boolean> showShulkerBoxBlockHint;
@@ -21,6 +25,9 @@ public class PeekConfig {
     public final ConfigEntry<Boolean> useShulkerBoxItemNames;
     public final ConfigEntry<ShulkerItemDisplayType> shulkerBoxItemDisplayType;
     public final ConfigEntry<Boolean> hideShulkerBoxDataStrings;
+
+    public final IntegerConfigEntry bundleColumns;
+    public final IntegerConfigEntry bundleItemCount;
 
     public final ConfigEntry<Boolean> showHud;
     public final ConfigEntry<String> hudBackgroundColor;
@@ -46,6 +53,12 @@ public class PeekConfig {
                 "peek_ender_chests",
                 false,
                 "Displays the cached contents of ender chests"
+        );
+        peekSulfurCubeArchetype = builder.booleanEntry(
+                "peek_sulfur_cube_archetype",
+                true,
+                "Displays the archetype of sulfur cubes in a bucket",
+                "Also shows all information about the archetype when advanced tooltips are enabled"
         );
 
         showShulkerBoxItemHint = builder.booleanEntry(
@@ -91,8 +104,17 @@ public class PeekConfig {
                 true,
                 "If this is enabled, the mod will hide the data strings on tooltips and GUIs"
         );
-        
-        
+		bundleColumns = builder.integerEntry(
+				"bundle_columns",
+				4, 4, 64,
+				"The amount of horizontal items that should be displayed when hovering over a bundle"
+		);
+		bundleItemCount = builder.integerEntry(
+				"bundle_item_count",
+				12, 4, 64,
+				"The amount of items that should be displayed when hovering over a bundle",
+				"Must be larger or equal to the bundle columns"
+		);
         showHud = builder.booleanEntry(
                 "show_hud",
                 false,
@@ -112,6 +134,22 @@ public class PeekConfig {
 
         hudBackgroundColorValue = new BigInteger(hudBackgroundColor.get(), 16).intValue();
         hudTextColorValue = new BigInteger(hudTextColor.get(), 16).intValue();
+    }
+
+    public int getBundleItemCount() {
+        return Math.max(bundleColumns.get(), bundleItemCount.get());
+    }
+
+    private static Boolean shouldUseBundles;
+
+    public static boolean shouldModifyBundles() {
+        if (shouldUseBundles == null) {
+            shouldUseBundles = !FabricLoader.getInstance().isModLoaded("bundlesbeyond");
+            if (!shouldUseBundles) {
+                Peek.LOGGER.info("Bundle configuration disabled, as Bundles Beyond is present");
+            }
+        }
+        return shouldUseBundles;
     }
 
     public static enum ShulkerItemDisplayType {

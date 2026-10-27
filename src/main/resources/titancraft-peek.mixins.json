@@ -8,10 +8,10 @@
 	"AnvilScreenMixin",
 
     "BlockItemMixin",
+    "ClientBundleTooltipMixin",
     "ClientPlayNetworkHandlerMixin",
     "ClientTooltipComponentMixin",
     "ConditionalItemModelPropertiesMixin",
-	"GuiMixin",
     "ItemStackMixin",
     "LocalPlayerMixin",
     "MinecraftMixin",
@@ -23,10 +23,13 @@
     "ShulkerBoxRenderStateMixin",
     "ShulkerBoxScreenMixin",
     "ShulkerBoxSpecialRendererMixin"
-
   ],
-  "mixins": [],
+  "mixins": [
+    "BundleContentsMixin",
+    "SulfurCubeContentMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "plugin": "de.maxhenkel.peek.PeekMixinConfigPlugin"
 }
